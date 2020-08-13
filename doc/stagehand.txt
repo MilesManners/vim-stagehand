@@ -1,0 +1,33 @@
+*stagehand.txt*	Plugin for sandboxing some code
+
+Author:  Miles Manners <https://repo.dmm.gg>
+License: Same terms as Vim itself (see |license|)
+
+INTRODUCTION						*stagehand*
+
+This plugin provides a single operation.
+
+Take your current visual selection backstage. Once you have it backstage, make
+as many edits to it as you want. When you save backstage, all your changes
+will come back to the original buffer like you had never left it.
+
+For the real galaxy brain users out there, try combining stagehand with
+goyo.vim and limelight.vim. Stagehand provides events for this purpose.
+
+	autocmd! User StagehandEnter Goyo
+	autocmd! User StagehandLeave Goyo!
+
+MAPPINGS						*stagehand-mappings*
+
+s or <Plug>CloseCurtains
+	Close the curtains on your current visual selection
+
+ISSUES							*stagehand-issues*
+
+Deleting everything backstage and trying to save it while empty breaks it.
+
+The only way to keep undo history from backstage is to save constantly.
+
+The initial filling of backstage can be undone.
+
+ vim:tw=78:ts=8:ft=help:norl:
