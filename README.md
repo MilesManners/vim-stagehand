@@ -5,7 +5,7 @@ Press `s` to take your current visual selection backstage.
 Once you have it backstage, make as many edits as you want. When you save backstage, all your changes will come back to the original buffer like you had never left it.
 
 For the real galaxy brain users out there, try combining stagehand with
-[goyo.vim](https://github.com/junegunn/goyo.vim) and [limelight.vim](https://github.com/junegunn/limelight.vim). Stagehand provides events for this purpose.
+[goyo.vim][goyo] and [limelight.vim][limelight]. Stagehand provides events for this purpose.
 
 ```vim
 autocmd! User StagehandEnter Goyo
@@ -18,26 +18,40 @@ This plugin follows the standard runtime path structure, and as such it can be i
 
 | Plugin Manager | Install with... |
 | ------------- | ------------- |
-| [Pathogen][11] | `git clone https://github.com/milesmanners/vim-stagehand ~/.vim/bundle/vim-stagehand`<br/>Remember to run `:Helptags` to generate help tags |
-| [NeoBundle][12] | `NeoBundle 'milesmanners/vim-stagehand'` |
-| [Vundle][13] | `Plugin 'milesmanners/vim-stagehand'` |
-| [Plug][40] | `Plug 'milesmanners/vim-stagehand'` |
-| [VAM][22] | `call vam#ActivateAddons([ 'vim-stagehand' ])` |
-| [Dein][52] | `call dein#add('milesmanners/vim-stagehand')` |
-| [minpac][55] | `call minpac#add('milesmanners/vim-stagehand')` |
+| [Pathogen][pathogen] | `git clone https://github.com/milesmanners/vim-stagehand ~/.vim/bundle/vim-stagehand`<br/>Remember to run `:Helptags` to generate help tags |
+| [NeoBundle][neobundle] | `NeoBundle 'milesmanners/vim-stagehand'` |
+| [Vundle][vundle] | `Plugin 'milesmanners/vim-stagehand'` |
+| [Plug][plug] | `Plug 'milesmanners/vim-stagehand'` |
+| [VAM][vam] | `call vam#ActivateAddons([ 'vim-stagehand' ])` |
+| [Dein][dein] | `call dein#add('milesmanners/vim-stagehand')` |
+| [minpac][minpac] | `call minpac#add('milesmanners/vim-stagehand')` |
 | pack feature (native Vim 8 package feature)| `git clone https://github.com/milesmanners/vim-stagehand ~/.vim/pack/dist/start/vim-stagehand`<br/>Remember to run `:helptags ~/.vim/pack/dist/start/vim-stagehand/doc` to generate help tags |
 | manual | copy all of the files into your `~/.vim` directory |
 
 ## Self-Promotion
 
 Like stagehand.vim?  Star the repository on
-[GitHub](https://github.com/milesmanners/vim-stagehand)
+[GitHub][stagehand-github]
 
-Love surround.vim?  Follow [Miles Manners](https://repo.dmm.gg) on
-[GitHub](https://github.com/milesmanners) and
-[Twitter](http://twitter.com/milesmanners).
+Love surround.vim?  Follow [Miles Manners][personal-site] on
+[GitHub][personal-github] and
+[Twitter][personal-twitter].
 
 ## License
 
 Copyright (c) Joel Ewald.  Distributed under the same terms as Vim itself.
 See `:help license`.
+
+[stagehand-github]: https://github.com/milesmanners/vim-stagehand
+[personal-site]: https://repo.dmm.gg
+[personal-github]: https://github.com/milesmanners
+[personal-twitter]: https://twitter.com/milesmanners
+[goyo]: https://github.com/junegunn/goyo.vim
+[limelight]: https://github.com/junegunn/limelight.vim
+[pathogen]: https://github.com/tpope/vim-pathogen
+[neobundle]: https://github.com/Shougo/neobundle.vim
+[vundle]: https://github.com/VundleVim/Vundle.vim
+[plug]: https://github.com/junegunn/vim-plug
+[vam]: https://github.com/MarcWeber/vim-addon-manager
+[dein]: https://github.com/Shougo/dein.vim
+[minpac]: https://github.com/k-takata/minpac
