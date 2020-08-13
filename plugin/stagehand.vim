@@ -121,7 +121,7 @@ func! s:close_curtains()
   endif
 endfunc
 
-vnoremap <silent> <Plug>CloseCurtains <SID>close_curtains()<CR>
+vnoremap <silent> <Plug>CloseCurtains :<C-u>call <SID>close_curtains()<CR>
 vmap s <Plug>CloseCurtains
 
 let &cpo = s:cpo_save
