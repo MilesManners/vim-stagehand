@@ -64,7 +64,7 @@ func! s:open_curtains()
   let l:pos = getpos('.')
 
   " Copy everything from backstage
-  exec 'normal! gg0vG$hy'
+  exec 'normal! gg0vG$y'
 
   " Don't wipe everything in case of no exit
   setl bufhidden=hide
