@@ -24,7 +24,7 @@ func! s:store_selection()
   exec 'normal! `<'
   let s:selection_start = getpos('.')
 
-  exec 'keeppatterns normal! v`>l?[^\n]<cr>'
+  exec 'keeppatterns normal! v`>l?[^\n]<cr>'
   let s:selection_end = getpos('.')
 
   " Restore the cursor position like nothing ever happened
