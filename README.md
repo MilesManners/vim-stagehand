@@ -1,4 +1,4 @@
-# vim-stagehand
+# stagehand.vim
 
 Press `s` to take your current visual selection backstage.
 
