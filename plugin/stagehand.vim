@@ -51,7 +51,7 @@ endfunc
 
 func! s:get_selection()
   exec 'normal! gvy'
-  return getreg('"')
+  return split(getreg('"'), '\n')
 endfunc
 
 " Bring those changes out from backstage
