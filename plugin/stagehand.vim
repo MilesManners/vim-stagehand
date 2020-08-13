@@ -2,7 +2,7 @@
 " Author:  Miles Manners <https://repo.dmm.gg>
 " Version: 1.0
 
-if exists(g:loaded_stagehand) | finish | endif
+if exists("g:loaded_stagehand") | finish | endif
 let g:loaded_stagehand = 1
 
 let s:cpo_save = &cpo
