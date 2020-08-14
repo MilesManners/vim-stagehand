@@ -24,8 +24,11 @@ func! stagehand#store_selection()
   exec "normal! `<"
   let s:selection_start = getpos('.')
 
-  exec "keeppatterns normal! v`>l?[^\\n]\<cr>\<esc>"
+  exec "keeppatterns normal! v`>l"
+  call search('[^\n]', 'b')
   let s:selection_end = getpos('.')
+
+  exec "normal! \<esc>"
 
   " Restore the cursor position like nothing ever happened
   call setpos('.', l:pos)
@@ -64,7 +67,9 @@ func! stagehand#open_curtains()
   let l:pos = getpos('.')
 
   " Copy everything from backstage
-  exec "normal! gg0vG$y"
+  exec "normal! gg0vG$"
+  call search('[^\n]', 'b')
+  exec "normal! y"
 
   " Don't wipe everything in case of no exit
   setl bufhidden=hide
@@ -108,7 +113,7 @@ func! stagehand#close_curtains()
   augroup stagehandEvents
     au!
     " Replace saving with opening the curtains
-    au BufWriteCmd <buffer> call stagehand#wrap_register('"', funcref('Open_curtains')) | set nomodified
+    au BufWriteCmd <buffer> call stagehand#wrap_register('"', funcref('stagehand#open_curtains')) | set nomodified
     au BufWinLeave <buffer> au! stagehandEvents | if exists('#User#StagehandLeave') | do User StagehandLeave | endif
   augroup END
 
