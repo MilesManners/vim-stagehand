@@ -9,7 +9,7 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " Saves the current gv, excluding the newline at the end of V-LINE
-func! s:store_selection()
+func! Store_selection()
   " Store the cursor position so we can restore it later
   let l:pos = getpos('.')
 
@@ -31,14 +31,14 @@ func! s:store_selection()
   call setpos('.', l:pos)
 endfunc
 
-func! s:restore_selection()
+func! Restore_selection()
   call setpos('.', s:selection_start)
   exec "normal! v"
   call setpos('.', s:selection_end)
 endfunction
 
 " Protects a register to prevent pollution inside a function
-func! s:wrap_register(reg, fn)
+func! Wrap_register(reg, fn)
   " Store the register as a list of lines
   let [l:contents, l:type] = [getreg(a:reg), getregtype(a:reg)]
   try
@@ -49,13 +49,13 @@ func! s:wrap_register(reg, fn)
   endtry
 endfunc
 
-func! s:get_selection()
+func! Get_selection()
   exec "normal! gvy"
   return split(getreg('"'), '\n')
 endfunc
 
 " Bring those changes out from backstage
-func! s:open_curtains()
+func! Open_curtains()
   if ! &modified
     return
   endif
@@ -73,11 +73,11 @@ func! s:open_curtains()
   " TODO: Figure out why deleting everything fails to paste
 
   " Replace the old section (and update our gv)
-  call s:restore_selection()
+  call Restore_selection()
   exec "normal! \"_dPv`]\<esc>"
 
   " Renew our saved selection in case of no exit
-  call s:store_selection()
+  call Store_selection()
 
   exec ':b ' . l:bufnr
   call setpos('.', l:pos)
@@ -85,11 +85,11 @@ func! s:open_curtains()
 endfunc
 
 " Close the curtains and get ready to make the magic happen
-func! s:close_curtains()
+func! Close_curtains()
   " Save the selected region so we don't lose our place
-  call s:store_selection()
+  call Store_selection()
 
-  let l:output = s:wrap_register('"', funcref('s:get_selection'))
+  let l:output = Wrap_register('"', funcref('Get_selection'))
 
   let l:bufnr = bufnr('%')
   let l:ft = &filetype
@@ -108,7 +108,7 @@ func! s:close_curtains()
   augroup stagehandEvents
     au!
     " Replace saving with opening the curtains
-    au BufWriteCmd <buffer> call <SID>wrap_register('"', funcref('s:open_curtains')) | set nomodified
+    au BufWriteCmd <buffer> call Wrap_register('"', funcref('Open_curtains')) | set nomodified
     au BufWinLeave <buffer> au! stagehandEvents | if exists('#User#StagehandLeave') | do User StagehandLeave | endif
   augroup END
 
@@ -121,7 +121,7 @@ func! s:close_curtains()
   endif
 endfunc
 
-vnoremap <silent> <Plug>CloseCurtains :<C-u>call <SID>close_curtains()<CR>
+vnoremap <silent> <Plug>CloseCurtains :<C-u>call Close_curtains()<CR>
 vmap s <Plug>CloseCurtains
 
 let &cpo = s:cpo_save
