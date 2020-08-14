@@ -14,7 +14,7 @@ func! stagehand#store_selection()
   let l:pos = getpos('.')
 
   " Check for V-LINE mode
-  exec "normal! gv"
+  exec "normal! \<esc>gv"
   if mode() ==# 'V'
     " Remove the ending newline
     exec "normal! \<esc>`<v`>$h"
