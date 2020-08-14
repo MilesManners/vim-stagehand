@@ -1,6 +1,6 @@
 " stagehand.vim - stage code behind a curtain
 " Author:  Miles Manners <https://repo.dmm.gg>
-" Version: 1.0
+" Version: 1.1
 
 if exists("g:loaded_stagehand") | finish | endif
 let g:loaded_stagehand = 1
