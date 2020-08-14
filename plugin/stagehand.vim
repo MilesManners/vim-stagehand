@@ -14,17 +14,17 @@ func! s:store_selection()
   let l:pos = getpos('.')
 
   " Check for V-LINE mode
-  exec 'normal! gv'
+  exec "normal! gv"
   if mode() ==# 'V'
     " Remove the ending newline
-    exec 'normal! `<v`>$h'
+    exec "normal! \<esc>`<v`>$h"
   endif
-  exec 'normal! '
+  exec "normal! \<esc>"
 
-  exec 'normal! `<'
+  exec "normal! `<"
   let s:selection_start = getpos('.')
 
-  exec 'keeppatterns normal! v`>l?[^\n]<cr>'
+  exec "keeppatterns normal! v`>l?[^\\n>]\<cr>\<esc>"
   let s:selection_end = getpos('.')
 
   " Restore the cursor position like nothing ever happened
@@ -50,7 +50,7 @@ func! s:wrap_register(reg, fn)
 endfunc
 
 func! s:get_selection()
-  exec 'normal! gvy'
+  exec "normal! gvy"
   return split(getreg('"'), '\n')
 endfunc
 
@@ -64,7 +64,7 @@ func! s:open_curtains()
   let l:pos = getpos('.')
 
   " Copy everything from backstage
-  exec 'normal! gg0vG$y'
+  exec "normal! gg0vG$y"
 
   " Don't wipe everything in case of no exit
   setl bufhidden=hide
@@ -74,7 +74,7 @@ func! s:open_curtains()
 
   " Replace the old section (and update our gv)
   call s:restore_selection()
-  exec 'normal! "_dPv`]'
+  exec "normal! \"_dPv`]\<esc>"
 
   " Renew our saved selection in case of no exit
   call s:store_selection()
