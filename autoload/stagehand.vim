@@ -14,12 +14,10 @@ func! stagehand#store_selection()
   let l:pos = getpos('.')
 
   " Check for V-LINE mode
-  exec "normal! \<esc>gv"
-  if mode() ==# 'V'
-    " Remove the ending newline
-    exec "normal! \<esc>`<v`>$h"
+  if visualmode() ==# 'V'
+    " Convert V-LINE to VISUAL
+    exec "normal! `<v`>$\<esc>"
   endif
-  exec "normal! \<esc>"
 
   exec "normal! `<"
   let l:start = getpos('.')
