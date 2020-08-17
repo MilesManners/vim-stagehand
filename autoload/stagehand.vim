@@ -41,7 +41,7 @@ func! stagehand#restore_selection(selection)
   endif
   exec "normal! v"
   return setpos('.', a:selection[1])
-endfunction
+endfunc
 
 " Protects a register to prevent pollution inside a function
 func! stagehand#wrap_register(reg, fn)
@@ -93,6 +93,14 @@ func! stagehand#open_curtains()
   let b:selection = l:selection
 endfunc
 
+func! s:clear_autocmd()
+  au! * <buffer>
+
+  if exists('#User#StagehandLeave')
+    do User StagehandLeave
+  endif
+endfunc
+
 " Close the curtains and get ready to make the magic happen
 func! stagehand#close_curtains()
   " Save the selected region so we don't lose our place
@@ -104,7 +112,7 @@ func! stagehand#close_curtains()
   let l:ft = &filetype
 
   " Create the buffer
-  exec 'new Backstage'
+  exec 'new Backstage' . l:bufnr . l:selection[0][1] . '-' . l:selection[1][1]
   setl nobuflisted noswapfile buftype=acwrite bufhidden=wipe
 
   " Remove undo history while adding text to the new buffer
@@ -113,12 +121,9 @@ func! stagehand#close_curtains()
   let b:original = l:bufnr
   let b:selection = l:selection
 
-  augroup stagehandEvents
-    au!
-    " Replace saving with opening the curtains
-    au BufWriteCmd <buffer> call stagehand#wrap_register('"', funcref('stagehand#open_curtains')) | set nomodified
-    au BufWinLeave <buffer> au! stagehandEvents | if exists('#User#StagehandLeave') | do User StagehandLeave | endif
-  augroup END
+  " Replace saving with opening the curtains
+  au BufWriteCmd <buffer> call stagehand#wrap_register('"', funcref('stagehand#open_curtains')) | set nomodified
+  au BufWinLeave <buffer> call <SID>clear_autocmd()
 
   " Allow opening the curtains with no error messages
   set nomodified
