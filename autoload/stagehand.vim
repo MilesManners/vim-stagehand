@@ -107,15 +107,8 @@ func! stagehand#close_curtains()
   exec 'new Backstage'
   setl nobuflisted noswapfile buftype=acwrite bufhidden=wipe
 
-  call setline(1, l:output)
-
-  " TODO: Remove undo history from new buffer
-  " exec "set ul=-1 | m-1 | let &ul=" . &ul
-  let old_ul = &ul
-  set ul=-1
-  exe "normal a \<bs>\<esc>"
-  let &ul = old_ul
-  unlet old_ul
+  " Remove undo history while adding text to the new buffer
+  exec "set ul=-1 | call setline(1, l:output) | let &ul=" . &ul
 
   let b:original = l:bufnr
   let b:selection = l:selection
