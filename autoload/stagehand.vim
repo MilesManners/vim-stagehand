@@ -111,6 +111,11 @@ func! stagehand#close_curtains()
 
   " TODO: Remove undo history from new buffer
   " exec "set ul=-1 | m-1 | let &ul=" . &ul
+  let old_ul = &ul
+  set ul=-1
+  exe "normal a \<bs>\<esc>"
+  let &ul = old_ul
+  unlet old_ul
 
   let b:original = l:bufnr
   let b:selection = l:selection
