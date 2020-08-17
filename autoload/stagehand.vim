@@ -104,7 +104,7 @@ func! stagehand#close_curtains()
   let l:ft = &filetype
 
   " Create the buffer
-  exec 'new backstage'
+  exec 'new Backstage'
   setl nobuflisted noswapfile buftype=acwrite bufhidden=wipe
 
   call setline(1, l:output)
