@@ -33,7 +33,7 @@ This plugin follows the standard runtime path structure, and as such it can be i
 Like stagehand.vim?  Star the repository on
 [GitHub][stagehand-github]
 
-Love surround.vim?  Follow [Miles Manners][personal-site] on
+Love stagehand.vim?  Follow [Miles Manners][personal-site] on
 [GitHub][personal-github] and
 [Twitter][personal-twitter].
 
