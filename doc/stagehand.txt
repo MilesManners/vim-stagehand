@@ -30,4 +30,6 @@ The only way to keep undo history from backstage is to save constantly.
 
 The initial filling of backstage can be undone.
 
+Inline backstages cause very strange behavior on replacement.
+
  vim:tw=78:ts=8:ft=help:norl:

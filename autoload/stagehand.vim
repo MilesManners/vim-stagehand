@@ -22,22 +22,27 @@ func! stagehand#store_selection()
   exec "normal! \<esc>"
 
   exec "normal! `<"
-  let s:selection_start = getpos('.')
+  let l:start = getpos('.')
 
   exec "keeppatterns normal! v`>l"
   call search('[^\n]', 'b')
-  let s:selection_end = getpos('.')
+  let l:end = getpos('.')
 
   exec "normal! \<esc>"
 
   " Restore the cursor position like nothing ever happened
   call setpos('.', l:pos)
+
+  return [l:start, l:end]
 endfunc
 
-func! stagehand#restore_selection()
-  call setpos('.', s:selection_start)
+func! stagehand#restore_selection(selection)
+  let result = setpos('.', a:selection[0])
+  if result == -1
+    return -1
+  endif
   exec "normal! v"
-  call setpos('.', s:selection_end)
+  return setpos('.', a:selection[1])
 endfunction
 
 " Protects a register to prevent pollution inside a function
@@ -60,11 +65,12 @@ endfunc
 " Bring those changes out from backstage
 func! stagehand#open_curtains()
   if ! &modified
-    return
+    return 0
   endif
 
   let l:bufnr = bufnr('%')
   let l:pos = getpos('.')
+  let l:selection = b:selection
 
   " Copy everything from backstage
   exec "normal! gg0vG$"
@@ -78,21 +84,21 @@ func! stagehand#open_curtains()
   " TODO: Figure out why deleting everything fails to paste
 
   " Replace the old section (and update our gv)
-  call stagehand#restore_selection()
+  call stagehand#restore_selection(l:selection)
   exec "normal! \"_dPv`]\<esc>"
 
   " Renew our saved selection in case of no exit
-  call stagehand#store_selection()
+  let l:selection = stagehand#store_selection()
 
-  exec ':b ' . l:bufnr
   call setpos('.', l:pos)
   setl bufhidden=wipe
+  let b:selection = l:selection
 endfunc
 
 " Close the curtains and get ready to make the magic happen
 func! stagehand#close_curtains()
   " Save the selected region so we don't lose our place
-  call stagehand#store_selection()
+  let l:selection = stagehand#store_selection()
 
   let l:output = stagehand#wrap_register('"', funcref('stagehand#get_selection'))
 
@@ -109,6 +115,7 @@ func! stagehand#close_curtains()
   " exec "set ul=-1 | m-1 | let &ul=" . &ul
 
   let b:original = l:bufnr
+  let b:selection = l:selection
 
   augroup stagehandEvents
     au!
